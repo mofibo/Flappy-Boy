@@ -91,10 +91,6 @@ def Score(score):
     text = font.render("Score:" + str(score), True, black)
     screen.blit(text, [0, 0])
 
-
-# start background music
-pygame.mixer.music.play()
-
 # variables initialisation
 x = 350
 y = 250
@@ -109,58 +105,62 @@ space = 150
 obspeed = 2.5
 score = 0
 
-while not done:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            done = True
+if __name__ == "__main__":
+# start background music
+pygame.mixer.music.play()
+    
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                y_speed = -10
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    y_speed = -10
 
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP:
-                y_speed = 5
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_UP:
+                    y_speed = 5
 
-    # background fond
-    screen.blit(fond, (0, 0))
+        # background fond
+        screen.blit(fond, (0, 0))
 
-    obstacle(xloc, yloc, xsize, ysize)
-    ball(x, y)
-    Score(score)
+        obstacle(xloc, yloc, xsize, ysize)
+        ball(x, y)
+        Score(score)
 
-    # copyrights
-    fontt = pygame.font.SysFont(None, 25)
-    text2 = fontt.render("FIBO Copyrights 2017", True, black)
-    screen.blit(text2, [500, 480])
+        # copyrights
+        fontt = pygame.font.SysFont(None, 25)
+        text2 = fontt.render("FIBO Copyrights 2017", True, black)
+        screen.blit(text2, [500, 480])
 
-    y += y_speed
-    xloc -= obspeed
-    if y > ground:
-        gameover()
-        y_speed = 0
-        obspeed = 0
-    if xloc < -80:
-        xloc = 700
-        size = randint(0, 350)
-    if x + 20 > xloc and y - 20 < ysize and x - 15 < xsize + xloc:
-        gameover()
-        obspeed = 0
-        y_speed = 0
+        y += y_speed
+        xloc -= obspeed
+        if y > ground:
+            gameover()
+            y_speed = 0
+            obspeed = 0
+        if xloc < -80:
+            xloc = 700
+            size = randint(0, 350)
+        if x + 20 > xloc and y - 20 < ysize and x - 15 < xsize + xloc:
+            gameover()
+            obspeed = 0
+            y_speed = 0
 
-    if x + 20 > xloc and y + 20 > ysize + space and x - 15 < xsize + xloc:
-        gameover()
-        obspeed = 0
-        y_speed = 0
+        if x + 20 > xloc and y + 20 > ysize + space and x - 15 < xsize + xloc:
+            gameover()
+            obspeed = 0
+            y_speed = 0
 
-    if xloc <= 80:
-        xloc = 700
-        ysize = randint(0, 350)
-    if xloc < x < xloc + 3:
-        score = score + 1
+        if xloc <= 80:
+            xloc = 700
+            ysize = randint(0, 350)
+        if xloc < x < xloc + 3:
+            score = score + 1
 
-    # screen
-    pygame.display.flip()
-    clock.tick(60)
+        # screen
+        pygame.display.flip()
+        clock.tick(60)
 
-pygame.quit()
+    pygame.quit()
