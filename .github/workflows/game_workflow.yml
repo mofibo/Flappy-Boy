@@ -9,7 +9,7 @@ on:
 
 jobs:
   version-bump:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Check out source code
         id: check_out_source_code
