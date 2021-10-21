@@ -14,18 +14,11 @@ jobs:
       - name: Check out source code
         id: check_out_source_code
         uses: actions/checkout@v2
-        
-      - name:  'Automated Version Bump'
-        uses:  'phips28/gh-action-bump-version@master'
+
+      - name: "Automated Version Bump"
+        id: automated_version_bump
+        uses: digza/automatic-python-version@0.0.13
+        with:
+          tag-prefix: ""
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag-prefix:  ''
-
-#       - name: "Automated Version Bump"
-#         id: automated_version_bump
-#         uses: digza/automatic-python-version@0.0.13
-#         with:
-#           tag-prefix: ""
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
