@@ -61,6 +61,41 @@ class FlappyBoy:
     def game_personage(self, x, y):
         self.window.blit(self.FlappyBoyIMG, (x, y))
         return
+    
+    
+def gameover(self):
+    font = pygame.font.SysFont(None, 75)
+    text = font.render("GAME OVER", True, red)
+    screen.blit(text, [200, 250])
+    pygame.mixer.music.stop()
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+
+    if 150 + 120 > mouse[0] > 150 and 380 + 60 > mouse[1] > 380:
+        pygame.draw.rect(self.screen, self.bright_green, (150, 380, 120, 60))
+
+    else:
+        pygame.draw.rect(self.screen, self.green, (150, 380, 120, 60))
+
+    smallText = pygame.font.Font("freesansbold.ttf", 20)
+    textSurf1, textRect1 = text_objects("RESTART", smallText)
+    textRect1.center = ((150 + (120 / 2)), (380 + (60 / 2)))
+    screen.blit(textSurf1, textRect1)
+
+    if 460 + 120 > mouse[0] > 460 and 380 + 60 > mouse[1] > 380:
+        pygame.draw.rect(self.screen, self.bright_red, (460, 380, 120, 60))
+        if click[0] == 1:
+            pygame.quit()
+    else:
+        pygame.draw.rect(self.screen, self.red, (460, 380, 120, 60))
+        if click[0] == 1:
+            print("restart")
+
+    textSurf2, textRect2 = text_objects("EXIT", smallText)
+    textRect2.center = ((460 + (120 / 2)), (380 + (60 / 2)))
+    screen.blit(textSurf2, textRect2)
+    return
+
 
     def main_game(self):
         # start background music
