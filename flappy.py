@@ -47,55 +47,57 @@ class FlappyBoy:
         self.score = 0
         return
 
-    # obstacles
     def obstacle(self, xloc, yloc, xsize, ysize):
         pygame.draw.rect(self.screen, self.blue, [xloc, yloc, xsize, ysize])
         pygame.draw.rect(self.screen, self.blue, [xloc, int(yloc + ysize + self.space), xsize, ysize + 500])
+        return
 
-    # score
     def game_score(self, score):
         font = pygame.font.SysFont(None, 75)
         text = font.render("Score:" + str(score), True, self.black)
         self.screen.blit(text, [0, 0])
+        return
 
     def game_personage(self, x, y):
         self.window.blit(self.FlappyBoyIMG, (x, y))
         return
-    
-    
-def gameover(self):
-    font = pygame.font.SysFont(None, 75)
-    text = font.render("GAME OVER", True, red)
-    screen.blit(text, [200, 250])
-    pygame.mixer.music.stop()
-    mouse = pygame.mouse.get_pos()
-    click = pygame.mouse.get_pressed()
 
-    if 150 + 120 > mouse[0] > 150 and 380 + 60 > mouse[1] > 380:
-        pygame.draw.rect(self.screen, self.bright_green, (150, 380, 120, 60))
+    def text_objects(self, text, font):
+        textSurface = font.render(text, True, self.black)
+        return textSurface, textSurface.get_rect()
 
-    else:
-        pygame.draw.rect(self.screen, self.green, (150, 380, 120, 60))
+    def gameover(self):
+        font = pygame.font.SysFont(None, 75)
+        text = font.render("GAME OVER", True, self.red)
+        self.screen.blit(text, [200, 250])
+        pygame.mixer.music.stop()
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
 
-    smallText = pygame.font.Font("freesansbold.ttf", 20)
-    textSurf1, textRect1 = text_objects("RESTART", smallText)
-    textRect1.center = ((150 + (120 / 2)), (380 + (60 / 2)))
-    screen.blit(textSurf1, textRect1)
+        if 150 + 120 > mouse[0] > 150 and 380 + 60 > mouse[1] > 380:
+            pygame.draw.rect(self.screen, self.bright_green, (150, 380, 120, 60))
 
-    if 460 + 120 > mouse[0] > 460 and 380 + 60 > mouse[1] > 380:
-        pygame.draw.rect(self.screen, self.bright_red, (460, 380, 120, 60))
-        if click[0] == 1:
-            pygame.quit()
-    else:
-        pygame.draw.rect(self.screen, self.red, (460, 380, 120, 60))
-        if click[0] == 1:
-            print("restart")
+        else:
+            pygame.draw.rect(self.screen, self.green, (150, 380, 120, 60))
 
-    textSurf2, textRect2 = text_objects("EXIT", smallText)
-    textRect2.center = ((460 + (120 / 2)), (380 + (60 / 2)))
-    screen.blit(textSurf2, textRect2)
-    return
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf1, textRect1 = self.text_objects("RESTART", smallText)
+        textRect1.center = ((150 + (120 / 2)), (380 + (60 / 2)))
+        self.screen.blit(textSurf1, textRect1)
 
+        if 460 + 120 > mouse[0] > 460 and 380 + 60 > mouse[1] > 380:
+            pygame.draw.rect(self.screen, self.bright_red, (460, 380, 120, 60))
+            if click[0] == 1:
+                pygame.quit()
+        else:
+            pygame.draw.rect(self.screen, self.red, (460, 380, 120, 60))
+            if click[0] == 1:
+                print("restart")
+
+        textSurf2, textRect2 = self.text_objects("EXIT", smallText)
+        textRect2.center = ((460 + (120 / 2)), (380 + (60 / 2)))
+        self.screen.blit(textSurf2, textRect2)
+        return
 
     def main_game(self):
         # start background music
