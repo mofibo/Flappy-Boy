@@ -1,5 +1,6 @@
 import pygame
 from random import randint
+import numpy as np
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -12,8 +13,8 @@ bright_red = (255, 0, 0)
 pygame.init()
 
 # Display pygame window
-size = 700, 500
-window = pygame.display.set_mode(size)
+size = pygame.display.Info().current_w, pygame.display.Info().current_h  # 700, 500
+window = pygame.display.set_mode(size, pygame.RESIZABLE)
 screen = pygame.display.get_surface()
 
 # the name of the game and the icon
@@ -23,9 +24,13 @@ pygame.display.set_icon(iconIMG)
 
 # background
 fond = pygame.image.load("utils/bg.png")
+fond = pygame.transform.scale(fond, size)
 
 # personage
 persIMG = pygame.image.load("utils/pers.png")
+persIMG = pygame.transform.scale(
+    persIMG, tuple((5 * (np.array(list(size)) / np.array(list(persIMG.get_size())))).astype(int))
+)
 
 # background music
 pygame.mixer.music.load("utils/background.mp3")
@@ -48,36 +53,41 @@ def ball(x, y):
 
 # gameover
 def gameover():
-    font = pygame.font.SysFont(None, 75)
+    font = pygame.font.SysFont(None, 200)
     text = font.render("GAME OVER", True, red)
-    screen.blit(text, [200, 250])
+    text_rect = text.get_rect(center=(size[0] / 2, size[1] / 4))
+    screen.blit(text, text_rect)
     pygame.mixer.music.stop()
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
 
-    if 150 + 120 > mouse[0] > 150 and 380 + 60 > mouse[1] > 380:
-        pygame.draw.rect(screen, bright_green, (150, 380, 120, 60))
+    smallText = pygame.font.Font("freesansbold.ttf", 80)
 
-    else:
-        pygame.draw.rect(screen, green, (150, 380, 120, 60))
-
-    smallText = pygame.font.Font("freesansbold.ttf", 20)
     textSurf1, textRect1 = text_objects("RESTART", smallText)
-    textRect1.center = ((150 + (120 / 2)), (380 + (60 / 2)))
+    restart_rect = textSurf1.get_rect(center=(size[0] / 3, size[1] / 1.5))
+    textRect1.center = (size[0] / 3, size[1] / 1.5)
     screen.blit(textSurf1, textRect1)
 
-    if 460 + 120 > mouse[0] > 460 and 380 + 60 > mouse[1] > 380:
-        pygame.draw.rect(screen, bright_red, (460, 380, 120, 60))
+    textSurf2, textRect2 = text_objects("EXIT", smallText)
+    exit_rect = textSurf2.get_rect(center=(size[0] / 1.5, size[1] / 1.5))
+    textRect2.center = (size[0] / 1.5, size[1] / 1.5)
+
+    if restart_rect.left <= mouse[0] <= restart_rect.right and restart_rect.top <= mouse[1] <= restart_rect.bottom:
+        pygame.draw.rect(screen, bright_green, restart_rect)  # (150, 380, 120, 60))
+        screen.blit(textSurf1, textRect1)
+
+    else:
+        pygame.draw.rect(screen, green, restart_rect)  # (150, 380, 120, 60))
+        screen.blit(textSurf1, textRect1)
+
+    if exit_rect.left <= mouse[0] <= exit_rect.right and exit_rect.top <= mouse[1] <= exit_rect.bottom:
+        pygame.draw.rect(screen, bright_red, exit_rect)  # (460, 380, 120, 60))
+        screen.blit(textSurf2, textRect2)
         if click[0] == 1:
             pygame.quit()
     else:
-        pygame.draw.rect(screen, red, (460, 380, 120, 60))
-        if click[0] == 1:
-            print("restart")
-
-    textSurf2, textRect2 = text_objects("EXIT", smallText)
-    textRect2.center = ((460 + (120 / 2)), (380 + (60 / 2)))
-    screen.blit(textSurf2, textRect2)
+        pygame.draw.rect(screen, red, exit_rect)  # (460, 380, 120, 60))
+        screen.blit(textSurf2, textRect2)
 
 
 # obstacles
@@ -94,15 +104,15 @@ def Score(score):
 
 
 # variables initialisation
-x = 350
-y = 250
+x = size[0] / 2
+y = size[1] / 2
 x_speed = 0
 y_speed = 0
 ground = 477
-xloc = 700
+xloc = size[0]
 yloc = 0
-xsize = 70
-ysize = randint(0, 350)
+xsize = size[0] / 10
+ysize = randint(0, size[1] / 1.5)
 space = 150
 obspeed = 2.5
 score = 0
@@ -132,9 +142,9 @@ if __name__ == "__main__":
         Score(score)
 
         # copyrights
-        fontt = pygame.font.SysFont(None, 25)
-        text2 = fontt.render("FIBO Copyrights 2017", True, black)
-        screen.blit(text2, [500, 480])
+        fontt = pygame.font.SysFont(None, 35)
+        text2 = fontt.render("FIBO Copyrights 2017-..", True, black)
+        screen.blit(text2, [size[0] / 1.25, size[1] / 1.1])
 
         y += y_speed
         xloc -= obspeed

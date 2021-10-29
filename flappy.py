@@ -11,14 +11,14 @@ class FlappyBoy:
 
         # Display game window
         size = 700, 500
-        self.window = pygame.display.set_mode(size)
+        self.window = pygame.display.set_mode(size, pygame.RESIZABLE)
         self.screen = pygame.display.get_surface()
 
         # background
-        fond = pygame.image.load("utils/bg.png")
+        self.fond = pygame.image.load("utils/bg.png")
 
         # personage
-        persIMG = pygame.image.load("utils/pers.png")
+        self.persIMG = pygame.image.load("utils/pers.png")
 
         # background music
         pygame.mixer.music.load("utils/background.mp3")
