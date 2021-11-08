@@ -106,13 +106,18 @@ def Score(score):
 # variables initialisation
 x = size[0] / 2
 y = size[1] / 2
+
 x_speed = 0
 y_speed = 0
+
 ground = size[1]
+
 xloc = size[0]
 yloc = 0
+
 xsize = size[0] / 10
 ysize = randint(0, size[1] / 1.5)
+
 space = 150
 obspeed = 20
 score = 0
@@ -132,7 +137,7 @@ if __name__ == "__main__":
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP:
-                    y_speed = 5
+                    y_speed = 10
 
         # background fond
         screen.blit(fond, (0, 0))
@@ -153,23 +158,26 @@ if __name__ == "__main__":
             gameover()
             y_speed = 0
             obspeed = 0
+
         if xloc < -80:
             xloc = size[0]
             size = randint(0, size[0] / 2)
-        if x + 20 > xloc and y - 20 < ysize and x - 15 < xsize + xloc:
+
+        if x > xloc and y < ysize and x < xsize + xloc:
             gameover()
             obspeed = 0
             y_speed = 0
 
-        if x + 20 > xloc and y + 20 > ysize + space and x - 15 < xsize + xloc:
+        if x > xloc and y > ysize + space and x < xsize + xloc:
             gameover()
             obspeed = 0
             y_speed = 0
 
         if xloc <= 80:
-            xloc = 700
-            ysize = randint(0, 350)
-        if xloc < x < xloc + 3:
+            xloc = size[0]
+            ysize = randint(0, size[0] / 2)
+
+        if xloc < x < xsize:
             score = score + 1
 
         # screen
