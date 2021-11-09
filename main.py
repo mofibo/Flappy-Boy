@@ -147,10 +147,11 @@ if __name__ == "__main__":
         Score(score)
 
         # copyrights
-        fontt = pygame.font.SysFont(None, 35)
-        text2 = fontt.render("Copyright (c) 2017-2021, FIBO", True, black)
-        screen.blit(text2, [size[0] / 1.25, size[1] / 1.1])
-        screen.blit(fontt.render("All rights reserved.", True, black), [size[0] / 1.25, size[1] / 1.065])
+        copyrights_font = pygame.font.SysFont(None, 35)
+        copyrights_text = copyrights_font.render("Copyright (c) 2017-2021, FIBO", True, black)
+
+        screen.blit(copyrights_text, [size[0] / 1.25, size[1] / 1.1])
+        screen.blit(copyrights_font.render("All rights reserved.", True, black), [size[0] / 1.25, size[1] / 1.065])
 
         y += y_speed
         xloc -= obspeed
