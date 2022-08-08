@@ -2,6 +2,7 @@ import pygame
 from random import randint
 import numpy as np
 
+
 black = (0, 0, 0)
 white = (255, 255, 255)
 green = (0, 200, 0)
