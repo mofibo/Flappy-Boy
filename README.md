@@ -2,4 +2,5 @@
 It's a game similar to Flappy Bird done using PyGame
 
 Requirements:
-Python 3.8
+- Python 3.8
+- PyGame
